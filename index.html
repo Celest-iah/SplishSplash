@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Splish-Splash Car Wash</title>
+  <meta name="description" content="Splish-Splash Car Wash — quick, affordable washes with premium results." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <style>
+    :root {
+      --brand: #0ea5e9;
+      --brand-dark: #0284c7;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+      --ring: rgba(14,165,233,.35);
+      --ok: #16a34a;
+      --warn: #c2410c;
+      --err: #dc2626;
+    }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+
+    /* Header + wave */
+    header { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 50; }
+    .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: auto; padding: 1rem; }
+    .nav a { margin-left: 1rem; text-decoration: none; color: var(--muted); font-weight: 600; }
+    .wave-wrap{ position: relative; height: 38px; overflow: hidden; pointer-events:none; }
+    .wave{ width:200%; height:100%; display:block; }
+    .wave path{ fill: rgba(14,165,233,.20); }
+    @media (prefers-reduced-motion: no-preference) {
+      .wave { animation: wave-slide 5s linear infinite; }
+      @keyframes wave-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    }
+
+    section { padding: 4rem 1rem; max-width: 1100px; margin: auto; }
+    h1, h2 { color: var(--brand); margin-bottom: 0.5rem; }
+    .sub { color: var(--muted); margin-bottom: 2rem; }
+    .cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card { background: #fff; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid #e2e8f0; }
+    .card h3 { margin-top: 0; }
+    .price { font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; }
+    footer { background: #0b1220; color: #cbd5e1; padding: 2rem 1rem; text-align: center; margin-top: 2rem; }
+
+    .form { display:grid; gap:12px; }
+    .form label { font-weight:700; font-size:.95rem; }
+    .form input, .form textarea {
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid #cbd5e1; outline:none; font: inherit; background:#fff;
+      box-sizing: border-box;
+    }
+    .form input:focus, .form textarea:focus { box-shadow: 0 0 0 4px var(--ring); border-color: var(--brand); }
+    .btn { display:inline-block; border-radius:999px; padding:10px 18px; font-weight:700; background:var(--brand); color:#fff; box-shadow: var(--shadow); border:0; cursor:pointer; }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+    .hours { background:#fff; border:1px solid #e2e8f0; border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .alert { margin-top: 8px; font-size:.95rem; }
+    .alert.ok { color: var(--ok); }
+    .alert.warn { color: var(--warn); }
+    .alert.err { color: var(--err); }
+    .tiny { color: var(--muted); font-size:.85rem; }
+    .map { margin-top: 12px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid #e2e8f0; }
+    .map iframe { display:block; width:100%; height: 280px; border:0; }
+    .map-actions { margin-top: 8px; }
+    .map-actions a { color: var(--brand-dark); text-decoration: none; font-weight: 700; }
+    .map-actions a:hover { text-decoration: underline; }
+
+    /* Bubble cursor */
+    .bubble {
+      position: fixed; pointer-events:none; z-index: 9999; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.35) 60%, rgba(255,255,255,0) 70%);
+      box-shadow: inset 0 0 8px rgba(255,255,255,.6);
+      opacity: .7;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .bubble { animation: bubble-rise 1.2s ease-out forwards; }
+      @keyframes bubble-rise {
+        0%   { transform: translate(-50%, -50%) scale(.6); opacity:.0; }
+        15%  { opacity:.7; }
+        100% { transform: translate(-50%, -160%) scale(1.4); opacity:0; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <strong>Splish-Splash</strong>
+      <div>
+        <a href="#services">Services & Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="wave-wrap" aria-hidden="true">
+      <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,40 C150,80 350,0 600,40 C850,80 1050,0 1200,40 L1200,120 L0,120 Z"></path>
+        <path d="M1200,40 C1350,80 1550,0 1800,40 C2050,80 2250,0 2400,40 L2400,120 L1200,120 Z"></path>
+      </svg>
+    </div>
+  </header>
+
+  <section id="services">
+    <h2>Services & Pricing</h2>
+    <p class="sub">Choose the wash package that suits your needs. All services are performed on-site — just drive in.</p>
+    <div class="cards">
+      <div class="card"><h3>Basic</h3><div class="price">$12</div><ul><li>Placeholder service 1</li><li>Placeholder service 2</li><li>Placeholder service 3</li></ul></div>
+      <div class="card"><h3>Deluxe</h3><div class="price">$20</div><ul><li>Placeholder service 1</li><li>Placeholder service 2</li><li>Placeholder service 3</li></ul></div>
+      <div class="card"><h3>Ultimate</h3><div class="price">$30</div><ul><li>Placeholder service 1</li><li>Placeholder service 2</li><li>Placeholder service 3</li></ul></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact & Hours</h2>
+    <div class="grid-2">
+      <form class="card form" id="contactForm" autocomplete="on">
+        <h3 style="margin:0">Send us a message</h3>
+        <label for="title">Subject</label>
+        <input id="title" name="title" required />
+        <label for="name">Your Name</label>
+        <input id="name" name="name" autocomplete="name" required />
+        <label for="email">Your Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" required placeholder="How can we help?"></textarea>
+        <button class="btn" type="submit">Send</button>
+        <div id="formStatus" class="alert tiny" role="status" aria-live="polite"></div>
+      </form>
+
+      <aside>
+        <div class="hours" aria-labelledby="hours-title">
+          <h3 id="hours-title" style="margin-top:0">Visit us</h3>
+          <p><strong>Splish-Splash Car Wash</strong><br>109 4 St, Estevan, SK S4A 0T3</p>
+          <p><strong>Open 24/7</strong></p>
+          <p style="margin-top:10px">☎ <a href="tel:+13064719274">(306) 471-9274</a><br>✉ <a href="mailto:info@splish-splashestevan.ca">info@splish-splashestevan.ca</a></p>
+          <div class="map" aria-label="Map of Splish-Splash Car Wash location">
+            <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=109+4+St,+Estevan,+SK+S4A+0T3&output=embed"></iframe>
+          </div>
+          <div class="map-actions">
+            <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=109+4+St,+Estevan,+SK+S4A+0T3">Open in Google Maps →</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Splish-Splash Car Wash. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    const EMAILJS_PUBLIC_KEY = 'XuBGDp9Jj6i5dSnjL';
+    const EMAILJS_SERVICE_ID = 'service_4ndwq71';
+    const EMAILJS_TEMPLATE_ID = 'template_wm59ehi';
+
+    const $ = (id) => document.getElementById(id);
+    const statusEl = $('formStatus');
+    const setStatus = (msg, cls = 'warn') => { statusEl.textContent = msg; statusEl.className = `alert ${cls}`; };
+    $('year').textContent = new Date().getFullYear();
+
+    let emailJsReady = false;
+    try { if (window.emailjs && EMAILJS_PUBLIC_KEY) { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); emailJsReady = true; } } catch (e) {}
+
+    $('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = $('title').value.trim();
+      const name = $('name').value.trim();
+      const email = $('email').value.trim();
+      const message = $('message').value.trim();
+      const timeSent = new Date().toLocaleString();
+
+      if (!title || !name || !email || !message) { setStatus('Please complete the required fields.', 'err'); return; }
+
+      if (emailJsReady) {
+        setStatus('Sending…', 'warn');
+        try {
+          const payload = { title, name, email, time: timeSent, message };
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, payload);
+          setStatus('Message sent successfully!', 'ok');
+          e.target.reset();
+        } catch (err) {
+          console.error(err);
+          setStatus('Send failed. Please try again later.', 'err');
+        }
+      } else {
+        setStatus('Email service not configured properly.', 'err');
+      }
+    });
+
+    // Bubble cursor
+    (function () {
+      const allow = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+      if (!allow) return;
+      let last = 0;
+      const spawn = (x, y) => {
+        const b = document.createElement('span');
+        const size = 8 + Math.random()*18;
+        b.className = 'bubble';
+        b.style.width = b.style.height = size + 'px';
+        b.style.left = x + 'px';
+        b.style.top  = y + 'px';
+        b.style.mixBlendMode = 'screen';
+        document.body.appendChild(b);
+        b.addEventListener('animationend', () => b.remove());
+        setTimeout(() => b.remove(), 1500);
+      };
+      window.addEventListener('pointermove', (e) => {
+        const now = performance.now();
+        if (now - last < 25) return;
+        last = now;
+        spawn(e.clientX, e.clientY);
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
